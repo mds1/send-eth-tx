@@ -18,13 +18,14 @@
 
 <script>
 import { mapActions } from 'vuex'
+import web3 from '@ethereum/web3'
 import { required, minValue } from 'vuelidate/lib/validators'
 
 export default {
   data() {
     return {
-      value: this.$store.state.transactionObject.gasPrice, // default
-      minValue: this.$store.state.transactionObject.gasPrice, // minimum gas price allowed
+      value: 1, // default, Gwei
+      minValue: 1, // minimum gas price allowed, Gwei
     }
   },
 

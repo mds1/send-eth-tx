@@ -9,9 +9,9 @@ import web3 from '@ethereum/web3'
 // =======================================================================================
 
 export function requiredNetwork() {
-  // this function returns the required network the user must be connected to
-  // in order to interact with this dapp
-  return 'rinkeby'
+  // returns the required network the user must be connected to in order to interact with this dapp
+  // this currently is not needed and is more applicable to deployed smart contracts
+  return 'Rinkeby'
 }
 
 export async function currentNetwork() {
@@ -238,7 +238,7 @@ export function createTXLink(network, txhash) {
 
   // generate URL
   let url
-  if (network === 'main') {
+  if (network.toUpperCase() === 'MAIN') {
     url = 'https://etherscan.io/tx/' + txhash
   }
   else {

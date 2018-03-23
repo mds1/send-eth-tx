@@ -92,16 +92,17 @@ export default {
       }
 
       // if account is unlocked, ensure the user is on the right network
+      // this currently is not needed and is more applicable to deployed smart contracts
       const network = await functions.currentNetwork() // network currently connected to
-      if (network.toUpperCase() !== functions.requiredNetwork().toUpperCase()) {
-        // prepare HTML string
-        const failedHTML = '<br><br><b>Oops! Something went wrong...</b><br>You must be connected to the ' + functions.capitalizeFirstLetter(functions.requiredNetwork()) + ' network to send this transaction. You are currently connected to the ' + functions.capitalizeFirstLetter(network) + ' network.<br><br><br>'
-        // display failed message to user
-        failedAlert = functions.createTXAlert(failedHTML, 'negative')
-        // reset status of txsent flag, so user can send another tx if desired
-        this.txsent = false
-        return
-      }
+      // if (network.toUpperCase() !== functions.requiredNetwork().toUpperCase()) {
+      //   // prepare HTML string
+      //   const failedHTML = '<br><br><b>Oops! Something went wrong...</b><br>You must be connected to the ' + functions.capitalizeFirstLetter(functions.requiredNetwork()) + ' network to send this transaction. You are currently connected to the ' + functions.capitalizeFirstLetter(network) + ' network.<br><br><br>'
+      //   // display failed message to user
+      //   failedAlert = functions.createTXAlert(failedHTML, 'negative')
+      //   // reset status of txsent flag, so user can send another tx if desired
+      //   this.txsent = false
+      //   return
+      // }
 
       // generate alert that transaction will be sent
       const waitingHTML = '<br><br>Please confirm the transasction using the pop-up MetaMask dialog<br><br><br>'
