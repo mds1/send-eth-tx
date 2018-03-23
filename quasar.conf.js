@@ -23,12 +23,12 @@ module.exports = function (ctx) {
       remove: []
     },
     build: {
-      scopeHoisting: true,
+      scopeHoisting: false,
       vueRouterMode: 'history',
       // gzip: true,
       // analyze: true,
       // extractCSS: false,
-      // useNotifier: false,
+      useNotifier: false,
       extendWebpack(cfg) {
         // cfg.module.rules.push({
         //   enforce: 'pre',
