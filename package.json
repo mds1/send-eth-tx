@@ -1,8 +1,8 @@
 {
-  "name": "send-tx",
+  "name": "send-eth-tx",
   "version": "1.0.0",
   "description": "A simple webapp to send Ethereum transactions",
-  "productName": "send-tx",
+  "productName": "Send ETH Transactions",
   "cordovaId": "org.cordova.quasar.app",
   "author": "mds <17163988+mds1@users.noreply.github.com>",
   "private": true,

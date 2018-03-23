@@ -51,12 +51,6 @@ export default {
     }
   },
 
-  // NEXT:
-  //  - then, create a dapp-components template and use the tx sending as an example
-  //  - then, update lottery dapp example
-
-  //  - learn about zk-snarks
-
   components: {
     appAddressField: AddressField,
     appValueField: ValueField,
@@ -72,7 +66,7 @@ export default {
   methods: {
     async formSubmitted() {
       // used to access props within promise
-      let vm = this;
+      let _this = this;
 
       // update status of transaction
       this.txsent = true
@@ -125,24 +119,24 @@ export default {
         .on('transactionHash', function (txhash) {
 
           // save off txhash for later
-          vm.txhash = txhash
+          _this.txhash = txhash
           // dismiss old alert
           waitingAlert()
           // prepare new message
           const sentHTML1 = '<br><br>Waiting for the transaction to be confirmed by the Ethereum network. This will take between 15 and 60 seconds, but sometimes can be even longer. Click the transaction ID below for more information on the status of your transaction.<br><br>'
           // generate hyperlink to the transaction on ethercsan
-          const txidHTML = functions.createTXLink(network, vm.txhash)
+          const txidHTML = functions.createTXLink(network, _this.txhash)
           // finish generating message
           const sentHTML = sentHTML1 + txidHTML + '<br><br><br>'
           // display updated message to user
           sentAlert = functions.createTXAlert(sentHTML, 'warning')
 
-        })
+        }) // end .on('transactionHash')
 
         .on('receipt', function (receipt) {
 
           // receipt.status returns 0x0 if transaction fails, or 0x1 if it succeeds
-          web3.eth.getTransactionReceipt(vm.txhash).then(function (receipt) {
+          web3.eth.getTransactionReceipt(_this.txhash).then(function (receipt) {
             if (receipt.status === '0x0') {
               // ##########################  TRANSACTION FAILED  ##########################
 
@@ -153,7 +147,7 @@ export default {
               // shorten long error messages that may contain code references
               const errmsg = functions.trimErrorMessage(err.message)
               // generate hyperlink to the transaction on ethercsan
-              const txidHTML = functions.createTXLink(network, vm.txhash)
+              const txidHTML = functions.createTXLink(network, _this.txhash)
               // finish generating message
               let failedHTML = '<br><br><b>Oops! Something went wrong...</b><br>' + errmsg + ' For reference, your transaction ID is below.<br><br>' + txidHTML + '<br><br><br>'
               // display updated alert to user
@@ -178,14 +172,14 @@ export default {
               // once tx is confirmed, dismiss old alert and give an update
               sentAlert()
               // generate hyperlink to the transaction on ethercsan
-              const txidHTML = functions.createTXLink(network, vm.txhash)
+              const txidHTML = functions.createTXLink(network, _this.txhash)
               // finish generating message
               const confirmedHTML = '<br><br><b>Success!</b><br>Your transaction has been confirmed. For reference, your transaction ID is below.<br><br>' + txidHTML + '<br><br><br>'
               // display updated alert to user
               confirmedAlert = functions.createTXAlert(confirmedHTML, 'positive')
-            }
-          })
-        })
+            } // end if/else based on receipt status
+          }) // end web3.eth.getTransactionReceipt
+        }) // end .on('receipt')
 
         .catch(function (err) {
 
@@ -205,12 +199,12 @@ export default {
 
           // finish generating message
           let failedHTML;
-          if (vm.txhash === '') {
+          if (_this.txhash === '') {
             // transaction was never sent, so don't include transaction ID
             failedHTML = '<br><br><b>Oops! Something went wrong...</b><br>' + errmsg + '<br><br><br>'
           } else {
             // generate hyperlink to the transaction on ethercsan
-            const txidHTML = functions.createTXLink(network, vm.txhash)
+            const txidHTML = functions.createTXLink(network, _this.txhash)
             // include transaction ID in error message
             failedHTML = '<br><br><b>Oops! Something went wrong...</b><br>' + errmsg + ' For reference, your transaction ID is below.<br><br>' + txidHTML + '<br><br><br>'
           }
@@ -218,21 +212,21 @@ export default {
           // display alert
           failedAlert = functions.createTXAlert(failedHTML, 'negative')
 
-        })
+        }) // end .catch
 
         .finally(function () {
 
           // reset status of txsent flag, so user can send another tx if desired
-          vm.txsent = false
+          _this.txsent = false
 
-        });
+        }); // end .finally
 
       // End of  section where we interact with the Ethereum blockchain
       // ------------------------------------------------------------------------------------------
       // ------------------------------------------------------------------------------------------
 
-    }
-  },
+    } // end formSubmitted
+  }, // end methods
 
 
 }
